@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Page d'accueil - Moody</title>
+    <link rel="stylesheet" href="index.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Nom de l'utilisateur -->
+        <div class="user-info">
+            <h1>Bienvenue, <span id="currentUser"></span>!</h1>
+        </div>
+        
+
+        <!-- Phrase positive dynamique -->
+        <div class="message">
+            <p id="positiveMessage">"Vous êtes incroyable aujourd'hui !"</p>
+        </div>
+
+        <!-- Sélection d'emoji -->
+        <div class="emoji-selection">
+            <h2>Choisissez votre humeur :</h2>
+            <div class="emoji-list">
+                <span class="emoji" data-emoji="😊">😊</span>
+                <span class="emoji" data-emoji="😔">😔</span>
+                <span class="emoji" data-emoji="😐">😐</span>
+                <span class="emoji" data-emoji="😁">😁</span>
+                <span class="emoji" data-emoji="😎">😎</span>
+            </div>
+            <p id="selectedEmoji" class="selected-emoji">Emoji sélectionné: Aucune</p>
+        </div>
+
+        <!-- Score et étudiants aidant -->
+        <div class="score-info">
+            <p>Ton score: <span id="userScore">350</span></p>
+        </div>
+
+        <!-- Boutons centrés -->
+        <div class="buttons">
+            <a href="create.html" class="btn">Partager un problème</a>
+            <a href="view.html" class="btn">Voir les problèmes</a>
+            <a href="victories.html" class="btn">Voir mes victoires</a>
+        </div>
+    </div>
+
+    <!-- Graphique linéaire dans le footer pour les étudiants aidants -->
+    <footer class="footer">
+        <div class="graph-section">
+            <h2>Nombre d'étudiants aidés par jour</h2>
+            <canvas id="activityGraph" width="400" height="200"></canvas>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
