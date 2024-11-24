@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Partager un problème</title>
+    <link rel="stylesheet" href="create.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Partager votre problème</h1>
+        <form id="problemForm">
+            <label for="title">Titre du problème :</label>
+            <input type="text" id="title" required>
+
+            <label for="content">Votre message :</label>
+            <textarea id="content" required></textarea>
+
+            <label for="emoji">Choisissez un emoji :</label>
+            <select id="emoji">
+                <option value="😔">😔 Triste</option>
+                <option value="😊">😊 Heureux</option>
+                <option value="😐">😐 Neutre</option>
+            </select>
+
+            <label for="image">Ajouter une image (facultatif) :</label>
+            <input type="file" id="image">
+
+            <button type="submit" class="btn">Partager</button>
+            <button onclick="window.location.href='index.html';" class="btn">Retour à l'accueil</button>
+
+        </form>
+
+        <div id="message-success"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

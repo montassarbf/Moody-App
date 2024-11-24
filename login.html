@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Connexion - HappyCorner</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="login.css">
+</head>
+<body>
+  <div class="d-flex flex-column align-items-center justify-content-center min-vh-100 bg-light">
+    <div class="card shadow-lg p-4 w-100" style="max-width: 500px;">
+      <div class="text-center mb-4">
+        <h1>Se connecter</h1>
+        <p>Veuillez entrer vos informations pour accéder à votre espace.</p>
+      </div>
+      
+      <form id="login-form">
+        <div class="mb-3">
+          <label for="username" class="form-label">Nom d'utilisateur</label>
+          <input type="text" class="form-control" id="username" required placeholder="Entrez votre nom">
+        </div>
+        
+        <div class="mb-3">
+          <label for="password" class="form-label">Mot de passe</label>
+          <input type="password" class="form-control" id="password" required placeholder="Entrez votre mot de passe">
+        </div>
+        
+        <button type="submit" class="btn btn-primary w-100">Se connecter</button>
+      </form>
+      
+      <div class="text-center mt-3">
+        <p>Pas encore de compte? <a href="register.html">Créer un compte</a></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    document.getElementById('login-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if(username && password) {
+        const user = { name: username, password: password, avatar: '😔', coins: 0, helped: 0 };
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        window.location.href = 'index.html'; // Redirige vers la page principale
+      } else {
+        alert('Veuillez remplir tous les champs.');
+      }
+    });
+  </script>
+</body>
+</html>
