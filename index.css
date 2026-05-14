@@ -1,0 +1,118 @@
+/* Réinitialisation des styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container principal */
+.container {
+    width: 80%;
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre de la page */
+h1 {
+    text-align: center;
+    color: #3f7d7d;
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+}
+
+/* Emoji selection */
+.emoji-list {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.emoji {
+    font-size: 3rem;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.emoji:hover {
+    transform: scale(1.2);
+}
+
+/* User Info section */
+.user-info {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.selected-emoji {
+    font-size: 1.5rem;
+    color: #3f7d7d;
+    font-weight: bold;
+}
+
+/* Buttons for interaction */
+.buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 30px;
+}
+
+a.btn {
+    background-color: #3f7d7d;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+a.btn:hover {
+    background-color: #45a29e;
+}
+
+/* Score and positive message */
+.score-info {
+    text-align: center;
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.message {
+    background-color: #f0f8ff;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Footer for the graph */
+.footer {
+    margin-top: 50px;
+    padding: 30px;
+    background-color: #f4f4f9;
+}
+
+#activityGraph {
+    width: 100%;
+    max-width: 800px;
+    margin: 20px auto;
+}
+h2{
+    text-align: center;
+}

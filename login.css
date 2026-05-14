@@ -1,0 +1,101 @@
+/* Réinitialisation des styles de base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container principal pour centrer le formulaire */
+.d-flex {
+    display: flex;
+    justify-content: center;
+    background-image: url('background.jpg');
+    background-size: cover;
+    align-items: center;
+    filter: blur();
+    min-height: 100vh;
+    background-color: #f4f4f9;
+}
+
+/* Card pour le formulaire de connexion */
+.card {
+    width: 100%;
+    max-width: 500px;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+}
+
+.card .text-center h1 {
+    color: #3f7d7d;
+    font-size: 2.5rem;
+    margin-bottom: 15px;
+}
+
+.card .text-center p {
+    color: #666;
+    font-size: 1.2rem;
+}
+
+/* Champs de saisie */
+.form-label {
+    font-size: 1.1rem;
+    color: #3f7d7d;
+}
+
+.form-control {
+    font-size: 1.2rem;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus {
+    border-color: #45a29e;
+    outline: none;
+}
+
+/* Bouton de connexion */
+.btn-primary {
+    background-color: #3f7d7d;
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px 0;
+    border-radius: 5px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: #45a29e;
+}
+
+/* Lien pour la création de compte */
+.text-center p {
+    font-size: 1.1rem;
+}
+
+.text-center a {
+    color: #3f7d7d;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.text-center a:hover {
+    color: #45a29e;
+}
+
+/* Animations et effets */
+.card:hover {
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+}
