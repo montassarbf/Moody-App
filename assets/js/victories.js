@@ -1,4 +1,9 @@
 document.addEventListener('DOMContentLoaded', function() {
+  const loader = document.querySelector('.loader');
+  if (loader) {
+    setTimeout(() => loader.classList.add('hidden'), 800);
+  }
+
   const victoryInput = document.getElementById('victory-input');
   const addBtn = document.getElementById('add-victory-btn');
   const victoryList = document.getElementById('victory-list');
