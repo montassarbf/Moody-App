@@ -68,14 +68,14 @@ function initUserDisplay() {
   }
   
   if (currentUser && currentUser.name) {
-    userElement.textContent = currentUser.name;
+    if (userElement) userElement.textContent = currentUser.name;
     if (avatarElement) updateAvatar(avatarElement, currentUser.avatar);
     if (menuAvatar) updateAvatar(menuAvatar, currentUser.avatar);
     if (menuUsername) menuUsername.textContent = currentUser.name;
     if (scoreElement) animateNumber(scoreElement, currentUser.coins || 0);
     if (helpedElement) animateNumber(helpedElement, currentUser.helped || 0);
   } else {
-    userElement.textContent = 'Visiteur';
+    if (userElement) userElement.textContent = 'Visiteur';
     if (avatarElement) updateAvatar(avatarElement, '😊');
     if (menuAvatar) updateAvatar(menuAvatar, '😊');
     if (menuUsername) menuUsername.textContent = 'Visiteur';
