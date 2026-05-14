@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paramètres - Moody</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="page-transition">
+  <div class="loader">
+    <div class="loader__content">
+      <div class="loader__spinner"></div>
+      <p class="loader__text">Chargement...</p>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <header class="top-bar">
+    <div class="top-bar__left">
+      <a href="profile.html" class="back-link">
+        <i class="bi bi-arrow-left"></i> Retour
+      </a>
+    </div>
+    <div class="top-bar__right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+        <i class="bi bi-moon-fill theme-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <header class="page-header fade-in">
+      <h1>
+        <i class="bi bi-gear-fill"></i> Paramètres
+      </h1>
+      <p>Personnalisez votre expérience</p>
+    </header>
+
+    <div class="card fade-in stagger-1">
+      <div class="settings-group">
+        <h3 class="settings-group__title">
+          <i class="bi bi-palette-fill"></i> Apparence
+        </h3>
+        
+        <div class="settings-item">
+          <div>
+            <div class="settings-item__label">Mode sombre</div>
+            <div class="settings-item__description">Activer le thème sombre</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+
+        <div class="settings-item">
+          <div>
+            <div class="settings-item__label">Animations</div>
+            <div class="settings-item__description">Afficher les animations de transition</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="animationsToggle" checked>
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <h3 class="settings-group__title">
+          <i class="bi bi-bell-fill"></i> Notifications
+        </h3>
+        
+        <div class="settings-item">
+          <div>
+            <div class="settings-item__label">Sons</div>
+            <div class="settings-item__description">Émettre un son lors des notifications</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="soundsToggle" checked>
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+
+        <div class="settings-item">
+          <div>
+            <div class="settings-item__label">Messages positifs</div>
+            <div class="settings-item__description">Afficher les encouragements sur la page d'accueil</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="messagesToggle" checked>
+            <span class="toggle__slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <h3 class="settings-group__title">
+          <i class="bi bi-person-fill"></i> Compte
+        </h3>
+        
+        <div class="settings-item" style="flex-direction: column; align-items: flex-start;">
+          <div style="margin-bottom: 1rem;">
+            <div class="settings-item__label">Modifier l'avatar</div>
+            <div class="settings-item__description">Choisir un nouvel avatar</div>
+          </div>
+          <div class="emoji-grid" style="justify-content: flex-start; gap: 0.5rem;">
+            <button class="avatar-btn" data-avatar="😊">
+              <i class="bi bi-emoji-smile"></i>
+            </button>
+            <button class="avatar-btn" data-avatar="😎">
+              <i class="bi bi-emoji-sunglasses"></i>
+            </button>
+            <button class="avatar-btn" data-avatar="🌟">
+              <i class="bi bi-star-fill"></i>
+            </button>
+            <button class="avatar-btn" data-avatar="💪">
+              <i class="bi bi-lightning-charge-fill"></i>
+            </button>
+            <button class="avatar-btn" data-avatar="🎉">
+              <i class="bi bi-balloon-fill"></i>
+            </button>
+            <button class="avatar-btn" data-avatar="🤗">
+              <i class="bi bi-heart-fill"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <h3 class="settings-group__title">
+          <i class="bi bi-keyboard"></i> Raccourcis clavier
+        </h3>
+        
+        <div class="settings-item">
+          <div class="settings-item__label">Créer un post</div>
+          <kbd class="kbd">N</kbd>
+        </div>
+        
+        <div class="settings-item">
+          <div class="settings-item__label">Voir les posts</div>
+          <kbd class="kbd">V</kbd>
+        </div>
+        
+        <div class="settings-item">
+          <div class="settings-item__label">Fermer les menus</div>
+          <kbd class="kbd">Esc</kbd>
+        </div>
+      </div>
+
+      <div class="settings-group">
+        <h3 class="settings-group__title">
+          <i class="bi bi-exclamation-triangle-fill"></i> Danger
+        </h3>
+        
+        <div class="settings-item" style="background: #FEE2E2;">
+          <div>
+            <div class="settings-item__label" style="color: var(--color-error);">Réinitialiser les données</div>
+            <div class="settings-item__description">Supprimer toutes vos données locales</div>
+          </div>
+          <button class="btn btn--sm" id="resetDataBtn" style="background: var(--color-error);">
+            <i class="bi bi-trash3-fill"></i> Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 2rem;" class="fade-in stagger-2">
+      <p style="color: var(--color-text-muted); font-size: 0.875rem;">Moody v2.1 - Fait avec <i class="bi bi-heart-fill"></i></p>
+    </div>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      initThemeToggle();
+      initSettings();
+    });
+
+    function initSettings() {
+      const settings = JSON.parse(localStorage.getItem('settings')) || {
+        darkMode: false,
+        animations: true,
+        sounds: true,
+        messages: true
+      };
+
+      document.getElementById('darkModeToggle').checked = settings.darkMode;
+      document.getElementById('animationsToggle').checked = settings.animations;
+      document.getElementById('soundsToggle').checked = settings.sounds;
+      document.getElementById('messagesToggle').checked = settings.messages;
+
+      if (settings.darkMode) {
+        document.body.setAttribute('data-theme', 'dark');
+        document.getElementById('themeToggle').innerHTML = '<i class="bi bi-sun-fill theme-icon"></i>';
+      }
+
+      if (!settings.animations) {
+        document.querySelectorAll('.fade-in, .scale-in').forEach(el => {
+          el.style.animation = 'none';
+        });
+      }
+
+      const toggles = ['darkModeToggle', 'animationsToggle', 'soundsToggle', 'messagesToggle'];
+      toggles.forEach(id => {
+        document.getElementById(id).addEventListener('change', function() {
+          settings[this.id.replace('Toggle', '')] = this.checked;
+          localStorage.setItem('settings', JSON.stringify(settings));
+          
+          if (this.id === 'darkModeToggle') {
+            if (this.checked) {
+              document.body.setAttribute('data-theme', 'dark');
+              document.getElementById('themeToggle').innerHTML = '<i class="bi bi-sun-fill theme-icon"></i>';
+            } else {
+              document.body.removeAttribute('data-theme');
+              document.getElementById('themeToggle').innerHTML = '<i class="bi bi-moon-fill theme-icon"></i>';
+            }
+          }
+          
+          if (this.id === 'animationsToggle' && !this.checked) {
+            document.querySelectorAll('.fade-in, .scale-in').forEach(el => {
+              el.style.animation = 'none';
+            });
+          }
+        });
+      });
+
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if (user) {
+        const avatarBtns = document.querySelectorAll('.avatar-btn');
+        avatarBtns.forEach(btn => {
+          if (btn.dataset.avatar === user.avatar) {
+            btn.classList.add('active');
+          }
+          btn.addEventListener('click', function() {
+            avatarBtns.forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            user.avatar = this.dataset.avatar;
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            showToast('Avatar mis à jour !', 'success');
+          });
+        });
+      }
+
+      document.getElementById('resetDataBtn').addEventListener('click', function() {
+        showConfirmModal('Êtes-vous sûr ? Toutes vos données seront perdues.', () => {
+          localStorage.clear();
+          showToast('Données réinitialisées', 'success');
+          setTimeout(() => window.location.href = 'login.html', 1500);
+        });
+      });
+    }
+
+    function showConfirmModal(message, onConfirm) {
+      const overlay = document.createElement('div');
+      overlay.className = 'modal-overlay';
+      overlay.innerHTML = `
+        <div class="modal scale-in">
+          <div class="modal__header">
+            <h3 class="modal__title"><i class="bi bi-exclamation-triangle-fill"></i> Confirmation</h3>
+          </div>
+          <div class="modal__body">
+            <p>${message}</p>
+          </div>
+          <div class="modal__actions">
+            <button class="btn btn--secondary" id="modalCancel">Annuler</button>
+            <button class="btn" id="modalConfirm" style="background: var(--color-error);">Confirmer</button>
+          </div>
+        </div>
+      `;
+      
+      document.body.appendChild(overlay);
+      setTimeout(() => overlay.classList.add('show'), 10);
+      
+      document.getElementById('modalCancel').addEventListener('click', () => closeModal());
+      document.getElementById('modalConfirm').addEventListener('click', () => {
+        onConfirm();
+        closeModal();
+      });
+      
+      function closeModal() {
+        overlay.classList.remove('show');
+        setTimeout(() => overlay.remove(), 300);
+      }
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container') || createToastContainer();
+      const icons = { success: 'check-circle-fill', error: 'x-circle-fill', info: 'info-circle-fill' };
+      
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${type}`;
+      toast.innerHTML = `
+        <i class="bi bi-${icons[type] || 'info-circle-fill'} toast__icon"></i>
+        <span class="toast__content">${message}</span>
+        <button class="toast__close" onclick="this.parentElement.remove()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      `;
+      
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
+    }
+
+    function createToastContainer() {
+      const container = document.createElement('div');
+      container.id = 'toast-container';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+      return container;
+    }
+  </script>
+</body>
+</html>

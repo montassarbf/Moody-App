@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mon profil - Moody</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body class="page-transition">
+  <div class="loader">
+    <div class="loader__content">
+      <div class="loader__spinner"></div>
+      <p class="loader__text">Chargement...</p>
+    </div>
+  </div>
+
+  <div id="toast-container" class="toast-container"></div>
+
+  <header class="top-bar">
+    <div class="top-bar__left">
+      <a href="index.html" class="back-link">
+        <i class="bi bi-arrow-left"></i> Retour
+      </a>
+    </div>
+    <div class="top-bar__right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Changer le thème">
+        <i class="bi bi-moon-fill theme-icon"></i>
+      </button>
+    </div>
+  </header>
+
+  <main class="container">
+    <div class="card fade-in">
+      <div class="profile-header">
+        <div class="profile-avatar" id="profileAvatar">
+          <i class="bi bi-person-fill"></i>
+        </div>
+        <h1 class="profile-name" id="profileName">Visiteur</h1>
+        <p class="profile-meta">Membre depuis <span id="memberSince">aujourd'hui</span></p>
+      </div>
+
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat__value" id="statCoins">0</div>
+          <div class="profile-stat__label">
+            <i class="bi bi-star-fill"></i> Points
+          </div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat__value" id="statHelped">0</div>
+          <div class="profile-stat__label">
+            <i class="bi bi-people-fill"></i> Aidé(s)
+          </div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat__value" id="statVictories">0</div>
+          <div class="profile-stat__label">
+            <i class="bi bi-trophy-fill"></i> Victoires
+          </div>
+        </div>
+      </div>
+
+      <div class="profile-section">
+        <h2 class="profile-section__title">
+          <i class="bi bi-heart-fill"></i> Humeur actuelle
+        </h2>
+        <div class="emoji-grid" id="moodSelector">
+          <button class="emoji-btn" data-emoji="😊">
+            <i class="bi bi-emoji-smile"></i>
+          </button>
+          <button class="emoji-btn" data-emoji="😔">
+            <i class="bi bi-emoji-dizzy"></i>
+          </button>
+          <button class="emoji-btn" data-emoji="😐">
+            <i class="bi bi-emoji-neutral"></i>
+          </button>
+          <button class="emoji-btn" data-emoji="😁">
+            <i class="bi bi-emoji-laughing"></i>
+          </button>
+          <button class="emoji-btn" data-emoji="😎">
+            <i class="bi bi-emoji-sunglasses"></i>
+          </button>
+          <button class="emoji-btn" data-emoji="🥰">
+            <i class="bi bi-emoji-heart-eyes"></i>
+          </button>
+          <button class="emoji-btn" data-emoji="🤩">
+            <i class="bi bi-emoji-star-struck"></i>
+          </button>
+        </div>
+        <p class="emoji-display" style="margin-top: 1rem;">
+          Mise à jour: <span id="moodTime">-</span>
+        </p>
+      </div>
+
+      <div class="profile-section">
+        <h2 class="profile-section__title">
+          <i class="bi bi-activity"></i> Dernières activités
+        </h2>
+        <div id="recentActivity" class="victory-list">
+          <p style="color: var(--color-text-muted); text-align: center; padding: 1rem;">Aucune activité récente</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 2rem; text-align: center;">
+        <a href="settings.html" class="btn btn--secondary">
+          <i class="bi bi-gear"></i> Modifier le profil
+        </a>
+      </div>
+    </div>
+  </main>
+
+  <script src="assets/js/script.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProfile();
+      initThemeToggle();
+    });
+
+    function loadProfile() {
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      document.getElementById('profileAvatar').innerHTML = '<i class="bi bi-person-fill"></i>';
+      document.getElementById('profileName').textContent = user.name;
+      
+      const coinEl = document.getElementById('statCoins');
+      const helpedEl = document.getElementById('statHelped');
+      const victoryEl = document.getElementById('statVictories');
+      
+      animateNumber(coinEl, user.coins || 0);
+      animateNumber(helpedEl, user.helped || 0);
+      
+      const victories = JSON.parse(localStorage.getItem('victories')) || [];
+      animateNumber(victoryEl, victories.length);
+
+      const moodSelector = document.getElementById('moodSelector');
+      const moodBtns = moodSelector.querySelectorAll('.emoji-btn');
+      
+      if (user.currentMood) {
+        moodBtns.forEach(btn => {
+          if (btn.dataset.emoji === user.currentMood) {
+            btn.classList.add('active');
+          }
+          btn.addEventListener('click', () => {
+            moodBtns.forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            user.currentMood = btn.dataset.emoji;
+            user.moodTimestamp = new Date().toISOString();
+            localStorage.setItem('currentUser', JSON.stringify(user));
+            updateMoodTime();
+            showToast('Humeur mise à jour !', 'success');
+          });
+        });
+        updateMoodTime();
+      }
+
+      loadRecentActivity();
+    }
+
+    function animateNumber(element, target) {
+      let current = 0;
+      const duration = 1000;
+      const increment = target / (duration / 16);
+      
+      function update() {
+        current += increment;
+        if (current < target) {
+          element.textContent = Math.floor(current);
+          requestAnimationFrame(update);
+        } else {
+          element.textContent = target;
+        }
+      }
+      
+      update();
+    }
+
+    function updateMoodTime() {
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if (user && user.moodTimestamp) {
+        const time = new Date(user.moodTimestamp);
+        document.getElementById('moodTime').textContent = time.toLocaleString('fr-FR');
+      }
+    }
+
+    function loadRecentActivity() {
+      const activityEl = document.getElementById('recentActivity');
+      const posts = JSON.parse(localStorage.getItem('posts')) || [];
+      const victories = JSON.parse(localStorage.getItem('victories')) || [];
+
+      const activities = [];
+
+      posts.forEach(post => {
+        if (post.comments && post.comments.length > 0) {
+          activities.push({
+            type: 'comment',
+            text: `Commenté sur "${post.title.substring(0, 20)}..."`,
+            time: post.date
+          });
+        }
+        if (post.reactions && Object.keys(post.reactions).length > 0) {
+          activities.push({
+            type: 'reaction',
+            text: 'Réagi à un post',
+            time: post.date
+          });
+        }
+      });
+
+      victories.forEach(v => {
+        activities.push({
+          type: 'victory',
+          text: `Victoire: ${v.substring(0, 30)}...`,
+          time: new Date().toISOString()
+        });
+      });
+
+      activities.sort((a, b) => new Date(b.time) - new Date(a.time));
+
+      if (activities.length === 0) {
+        activityEl.innerHTML = '<p style="color: var(--color-text-muted); text-align: center; padding: 1rem;">Aucune activité récente</p>';
+        return;
+      }
+
+      const icons = { comment: 'chat-left-text-fill', reaction: 'heart-fill', victory: 'trophy-fill' };
+      
+      activityEl.innerHTML = activities.slice(0, 5).map(activity => `
+        <div class="victory-item fade-in">
+          <span class="victory-emoji"><i class="bi bi-${icons[activity.type]}"></i></span>
+          <span class="victory-text">${activity.text}</span>
+        </div>
+      `).join('');
+    }
+
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container') || createToastContainer();
+      const icons = { success: 'check-circle-fill', error: 'x-circle-fill', info: 'info-circle-fill' };
+      
+      const toast = document.createElement('div');
+      toast.className = `toast toast--${type}`;
+      toast.innerHTML = `
+        <i class="bi bi-${icons[type] || 'info-circle-fill'} toast__icon"></i>
+        <span class="toast__content">${message}</span>
+        <button class="toast__close" onclick="this.parentElement.remove()">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      `;
+      
+      container.appendChild(toast);
+      setTimeout(() => toast.classList.add('show'), 10);
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => toast.remove(), 400);
+      }, 4000);
+    }
+
+    function createToastContainer() {
+      const container = document.createElement('div');
+      container.id = 'toast-container';
+      container.className = 'toast-container';
+      document.body.appendChild(container);
+      return container;
+    }
+  </script>
+</body>
+</html>
